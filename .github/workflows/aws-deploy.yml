@@ -65,7 +65,7 @@ jobs:
       - name: 🚀 Build and publish to Elastic Container Registry
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: zentrity
+          ECR_REPOSITORY: ignite
           IMAGE_TAG: latest
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
