@@ -1,0 +1,17 @@
+# IDE
+.idea
+
+# nodejs
+dist
+node_modules
+
+# Docker
+docker
+
+# terraform
+**/.terraform
+*.tfstate
+*.tfstate.*
+
+# OS
+.DS_Store
