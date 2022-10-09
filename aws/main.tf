@@ -1,6 +1,7 @@
 # ℹ️ Description
-# Specifies the AWS provider, a provider plugin that Terraform will use to manage our AWS resources.
-# The configuration defines:
+# AWS Providers used by this project:
+# - Secrets Manager
+#   - Provider linked to Doppler
 # - VPC settings
 # - IAM Policy and Role as ECS resource
 # - ECS Cluster
@@ -8,14 +9,12 @@
 provider "aws" {
   region = var.region
 
+  default_tags {
+    tags = var.tags
+  }
 }
 module "secrets" {
-  source  = "./modules/secrets"
-}
-
-module "network" {
-  source  = "./modules/network"
-  project = var.project
+  source = "./modules/secrets"
 }
 
 module "security" {
@@ -23,11 +22,15 @@ module "security" {
   project = var.project
 }
 
+module "network" {
+  source  = "./modules/network"
+  project = var.project
+}
+
 module "ecs" {
-  source         = "./modules/ecs"
-  project        = var.project
-  ecs_role_arn   = module.security.ecs_role_arn
-  subnet         = module.network.subnet
-  security_group = module.network.security_group
-  secrets_arn    = module.secrets.arn
+  source   = "./modules/ecs"
+  project  = var.project
+  security = module.security.server
+  network  = module.network.server
+  secrets  = module.secrets.doppler
 }

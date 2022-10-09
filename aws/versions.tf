@@ -1,6 +1,8 @@
 # ℹ️ Description
 # Defines version constraints for Terraform and the AWS provider.
 
+# ♻️ Workspaces:
+# - server-ignite [backend, ignite]
 terraform {
   required_version = ">= 1.1.7"
 

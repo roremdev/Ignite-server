@@ -1,5 +1,5 @@
 # ℹ️ Description
-# Defines the input variables that are referenced in main.tf.tf, which make the configuration customizable.
+# Input variables for AWS IAM.
 
 variable "project" {
   description = "AWS project name"

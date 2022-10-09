@@ -1,6 +1,12 @@
+# ℹ️ Description
+# Specifies the AWS network.
+
+# 📚 AWS VPC
+# Generates a VPC with a public and private subnet.
 resource "aws_vpc" "vpc" {
   cidr_block = "10.0.0.0/16"
-  tags       = {
+
+  tags = {
     Name = var.project
   }
 }
@@ -9,7 +15,7 @@ resource "aws_internet_gateway" "gateway" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name =  var.project
+    Name = var.project
   }
 }
 
@@ -19,26 +25,27 @@ resource "aws_subnet" "subnet" {
   availability_zone = "us-east-1a"
 
   tags = {
-    Name =  var.project
+    Name = var.project
   }
 }
 
-resource "aws_route_table" "public_route_table" {
-  vpc_id     = aws_vpc.vpc.id
-  depends_on = [aws_vpc.vpc]
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.vpc.id
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.gateway.id
   }
 
   tags = {
-    Name =  var.project
+    Name = var.project
   }
+
+  depends_on = [aws_vpc.vpc]
 }
 
 resource "aws_route_table_association" "public" {
   subnet_id      = aws_subnet.subnet.id
-  route_table_id = aws_route_table.public_route_table.id
+  route_table_id = aws_route_table.public.id
 }
 
 resource "aws_security_group" "security_group" {
@@ -62,6 +69,6 @@ resource "aws_security_group" "security_group" {
   }
 
   tags = {
-    Name =  var.project
+    Name = var.project
   }
 }

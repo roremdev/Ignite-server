@@ -1,9 +1,10 @@
-output "subnet" {
-  description = "Subnet ID"
-  value       = aws_subnet.subnet.id
-}
+# ℹ️ Description
+# Output of AWS network.
 
-output "security_group" {
-  description = "Security Group ID"
-  value       = aws_security_group.security_group.id
+output "server" {
+  description = "AWS network"
+  value       = {
+    subnet         = aws_subnet.subnet.id
+    security_group = aws_security_group.security_group.id
+  }
 }

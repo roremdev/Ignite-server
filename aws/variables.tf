@@ -1,5 +1,5 @@
 # ℹ️ Description
-# Defines the input variables that are referenced in main.tf.tf, which make the configuration customizable.
+# Global variables of this project.
 
 variable "region" {
   description = "AWS region"
@@ -8,5 +8,15 @@ variable "region" {
 
 variable "project" {
   description = "AWS project name"
-  default     = "ignite"
+  default     = "server-ignite"
+}
+
+variable "tags" {
+  description = "AWS tags"
+
+  default = {
+    "project"     = "ignite"
+    "environment" = "development"
+    "scope"       = "backend"
+  }
 }
