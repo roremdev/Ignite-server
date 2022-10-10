@@ -39,5 +39,5 @@ module "ecs" {
   secrets    = module.secrets.doppler
   repository = module.repository.docker
   security   = module.security.server
-    network  = module.network.server
+  network    = module.network.server
 }
