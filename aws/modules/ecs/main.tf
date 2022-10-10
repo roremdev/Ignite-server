@@ -5,10 +5,6 @@ locals {
   ]
 }
 
-resource "aws_ecr_repository" "docker" {
-  name = var.project
-}
-
 resource "aws_ecs_cluster" "server" {
   name = var.project
 }
@@ -51,11 +47,17 @@ resource "aws_ecs_service" "development" {
   cluster         = aws_ecs_cluster.server.id
   task_definition = aws_ecs_task_definition.server.arn
   launch_type     = "FARGATE"
-  desired_count   = 1
+  desired_count   = 2
 
   network_configuration {
     assign_public_ip = true
-    subnets          = [var.network.subnet]
+    subnets          = var.network.subnets
     security_groups  = [var.network.security_group]
+  }
+
+  load_balancer {
+    target_group_arn = var.network.target_group
+    container_name   = aws_ecs_task_definition.server.family
+    container_port   = 80
   }
 }

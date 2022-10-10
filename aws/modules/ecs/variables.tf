@@ -5,14 +5,15 @@ variable "project" {
   description = "AWS project name"
 }
 
-variable "security" {
-  description = "AWS IAM"
-}
-
-variable "network" {
-  description = "AWS network"
-}
-
 variable "secrets" {
   description = "AWS Secrets Manager"
 }
+
+#variable "security" {
+#  description = "AWS IAM"
+#}
+#
+#variable "network" {
+#  description = "AWS network"
+#}
+

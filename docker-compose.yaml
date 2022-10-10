@@ -1,14 +1,14 @@
 services:
-  node:
-    build: .
-    container_name: ${MODE}
-    ports:
-      - ${PORT}:${PORT}
-    expose:
-      - ${PORT}
-    environment:
-      - SERVER_URL
-      - DB_URL
-      - DOMAIN
-      - PORT
-      - MODE=production
+    node:
+        build: .
+        container_name: ${MODE}
+        ports:
+            - ${PORT}:${PORT}
+        expose:
+            - ${PORT}
+        environment:
+            - SERVER_URL
+            - DOMAIN
+            - PORT
+            - PROJECT
+            - MODE=production

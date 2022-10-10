@@ -1,4 +1,4 @@
-<img src="./project/assets/larifamos.svg" alt="logo" width="80">
+<img src="./project/assets/ignite.svg" alt="logo" width="80">
 
 # LaRifamos
 

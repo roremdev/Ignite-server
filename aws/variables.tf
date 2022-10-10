@@ -11,6 +11,14 @@ variable "project" {
   default     = "server-ignite"
 }
 
+variable "settings" {
+  description = "Settings for the project"
+  default     = {
+    port          = 80
+    "environment" = "development"
+  }
+}
+
 variable "tags" {
   description = "AWS tags"
 

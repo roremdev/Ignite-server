@@ -6,27 +6,27 @@ output "secrets" {
   value       = module.secrets.doppler
 }
 
-output "security" {
-  description = "AWS IAM"
-  value       = module.security.server
-}
-
-output "network" {
-  description = "AWS network"
-  value       = module.network.server
-}
-
 output "repository" {
   description = "AWS ECR"
-  value       = module.ecs.repository
+  value       = module.repository.server
 }
 
-output "cluster" {
-  description = "AWS ECS Cluster"
-  value       = module.ecs.cluster
-}
+#output "security" {
+#  description = "AWS IAM"
+#  value       = module.security.server
+#}
+#
+#output "network" {
+#  description = "AWS network"
+#  value       = module.network.server
+#}
 
-output "task" {
-  description = "AWS ECS Task"
-  value       = module.ecs.task
-}
+#output "cluster" {
+#  description = "AWS ECS Cluster"
+#  value       = module.ecs.cluster
+#}
+#
+#output "task" {
+#  description = "AWS ECS Task"
+#  value       = module.ecs.task
+#}

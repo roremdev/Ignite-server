@@ -6,6 +6,8 @@ dist
 project
 node_modules
 
+# Infrastructure
+aws
+
 # IDE
 .idea
-.vscode

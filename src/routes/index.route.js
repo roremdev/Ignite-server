@@ -15,9 +15,9 @@ router.get(
     wrapper(async (_, res, next) => {
         info('GET /')
         res.locals.data = {
-            project: 'LaRifamos',
-            mode: server.get('mode'),
-            version: server.get('version'),
+            project: server.get('PROJECT'),
+            mode: server.get('MODE'),
+            version: server.get('VERSION'),
         }
         next()
     }),

@@ -13,24 +13,30 @@ provider "aws" {
     tags = var.tags
   }
 }
+
 module "secrets" {
   source = "./modules/secrets"
 }
 
-module "security" {
-  source  = "./modules/security"
-  project = var.project
-}
-
-module "network" {
-  source  = "./modules/network"
-  project = var.project
-}
-
-module "ecs" {
-  source   = "./modules/ecs"
+module "repository" {
+  source   = "./modules/repository"
   project  = var.project
-  security = module.security.server
-  network  = module.network.server
-  secrets  = module.secrets.doppler
 }
+
+#module "security" {
+#  source  = "./modules/security"
+#  project = var.project
+#}
+#
+#module "network" {
+#  source  = "./modules/network"
+#  project = var.project
+#}
+
+#module "ecs" {
+#  source   = "./modules/ecs"
+#  project  = var.project
+#  security = module.security.server
+#  network  = module.network.server
+#  secrets  = module.secrets.doppler
+#}

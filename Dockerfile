@@ -6,8 +6,8 @@ WORKDIR /server
 
 COPY package.json pnpm-lock.yaml dist ./
 
-COPY prisma ./prisma
-
 RUN pnpm install --frozen-lockfile --production
+
+expose 80
 
 CMD [ "npm", "start" ]
