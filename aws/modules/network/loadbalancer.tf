@@ -1,8 +1,14 @@
 resource "aws_lb" "server" {
   name               = var.project
   load_balancer_type = "application"
-  subnets            = [aws_subnet.subnet_a.id, aws_subnet.subnet_b.id]
-  security_groups    = [aws_security_group.server.id]
+  subnets            = [
+    aws_default_subnet.subnet_a.id,
+    aws_default_subnet.subnet_b.id,
+    aws_default_subnet.subnet_c.id
+  ]
+  security_groups = [aws_security_group.server.id]
+
+  depends_on = [aws_internet_gateway.server]
 }
 
 resource "aws_alb_target_group" "server" {
@@ -10,10 +16,10 @@ resource "aws_alb_target_group" "server" {
   port        = 80
   protocol    = "HTTP"
   target_type = "ip"
-  vpc_id      = aws_vpc.server.id
+  vpc_id      = aws_default_vpc.server.id
 
   health_check {
-    matcher = "200"
+    matcher = "200,301,302"
     path    = "/"
   }
 
@@ -26,6 +32,7 @@ resource "aws_lb_listener" "server" {
   load_balancer_arn = aws_lb.server.arn
   port              = "80"
   protocol          = "HTTP"
+
   default_action {
     type             = "forward"
     target_group_arn = aws_alb_target_group.server.arn

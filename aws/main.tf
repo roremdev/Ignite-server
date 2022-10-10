@@ -19,24 +19,25 @@ module "secrets" {
 }
 
 module "repository" {
-  source   = "./modules/repository"
-  project  = var.project
+  source  = "./modules/repository"
+  project = var.project
 }
 
-#module "security" {
-#  source  = "./modules/security"
-#  project = var.project
-#}
-#
-#module "network" {
-#  source  = "./modules/network"
-#  project = var.project
-#}
+module "security" {
+  source  = "./modules/security"
+  project = var.project
+}
 
-#module "ecs" {
-#  source   = "./modules/ecs"
-#  project  = var.project
-#  security = module.security.server
-#  network  = module.network.server
-#  secrets  = module.secrets.doppler
-#}
+module "network" {
+  source  = "./modules/network"
+  project = var.project
+}
+
+module "ecs" {
+  source     = "./modules/ecs"
+  project    = var.project
+  secrets    = module.secrets.doppler
+  repository = module.repository.docker
+  security   = module.security.server
+    network  = module.network.server
+}

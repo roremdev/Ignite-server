@@ -1,17 +1,9 @@
-import 'module-alias/register'
-import { version } from '../package.json'
-import { MODE, PROJECT, PORT, SERVER_URL } from '@config/env'
+import express from 'express'
 
-import server from './server'
+const server = express()
 
-server.set('MODE', MODE)
-server.set('PROJECT', PROJECT)
-server.set('PORT', PORT)
-server.set('SERVER_URL', SERVER_URL)
-server.set('VERSION', version)
+server.get('/', (req, res) => res.send('Hello World 👋'))
 
-server.listen(server.get('PORT'), () => {
-    console.log(`⬢ Ignite - ${server.get('MODE')}`)
-    console.log(`◌ Listening Server on ${server.get('SERVER_URL')}`)
-    console.log(`◌ v${server.get('VERSION')}`)
+server.listen(80, () => {
+    console.log('⬢ Ignite')
 })

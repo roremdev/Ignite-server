@@ -1,7 +1,7 @@
 # ℹ️ Description
-# Output of AWS ECR and ECS.
+# Output of AWS ECR.
 
-output "server" {
+output "docker" {
   description = "AWS ECR"
   value       = {
     url = aws_ecr_repository.docker.repository_url

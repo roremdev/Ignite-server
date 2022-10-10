@@ -2,7 +2,6 @@
 resource "aws_security_group" "server" {
   name        = "server"
   description = "Allow HTTP inbound traffic"
-  vpc_id      = aws_vpc.server.id
 
   ingress {
     description = "Allow HTTP from anywhere"
@@ -24,11 +23,10 @@ resource "aws_security_group" "server" {
   }
 }
 
-# Traffic to the ECS cluster should only come from the Load Balancer
+## Traffic to the ECS cluster should only come from the Load Balancer
 resource "aws_security_group" "environment" {
   name        = "environment"
   description = "Allows traffic only from load balancer"
-  vpc_id      = aws_vpc.server.id
 
   ingress {
     from_port       = 0
