@@ -28,35 +28,35 @@ resource "aws_ecs_task_definition" "server" {
           hostPort      = 80
         }
       ]
-      secrets = [
-        {
-          name      = "PROJECT"
-          valueFrom = var.secrets.arn
-        }
-      ]
+#      secrets = [
+#        {
+#          name      = "PROJECT"
+#          valueFrom = var.secrets.arn
+#        }
+#      ]
     }
   ])
 }
 
-#resource "aws_ecs_service" "development" {
-#  name            = "development"
-#  cluster         = aws_ecs_cluster.server.id
-#  task_definition = aws_ecs_task_definition.server.arn
-#  launch_type     = "FARGATE"
-#  desired_count   = 3
-#
-#  network_configuration {
-#    assign_public_ip = true
-#    subnets          = var.network.subnets
-#    security_groups  = [var.network.security_group]
-#  }
-#
-#  load_balancer {
-#    target_group_arn = var.network.target_group
-#    container_name   = aws_ecs_task_definition.server.family
-#    container_port   = 80
-#  }
-#}
+resource "aws_ecs_service" "development" {
+  name            = "development"
+  cluster         = aws_ecs_cluster.server.id
+  task_definition = aws_ecs_task_definition.server.arn
+  launch_type     = "FARGATE"
+  desired_count   = 3
+
+  network_configuration {
+    assign_public_ip = true
+    subnets          = var.network.subnets
+    security_groups  = [var.network.security_group]
+  }
+
+  load_balancer {
+    target_group_arn = var.network.target_group
+    container_name   = aws_ecs_task_definition.server.family
+    container_port   = 80
+  }
+}
 
 
 #secrets = [
