@@ -14,10 +14,16 @@ provider "aws" {
   }
 }
 
-module "secrets" {
-  source = "./modules/secrets"
+provider "doppler" {
+  doppler_token = var.doppler_token
 }
 
+data "doppler_secrets" "ignite" {}
+
+#module "secrets" {
+#  source = "./modules/secrets"
+#}
+#
 module "repository" {
   source  = "./modules/repository"
   project = var.project
@@ -36,7 +42,7 @@ module "network" {
 module "ecs" {
   source     = "./modules/ecs"
   project    = var.project
-  secrets    = module.secrets.doppler
+  secrets    = data.doppler_secrets.ignite.map
   repository = module.repository.docker
   security   = module.security.server
   network    = module.network.server

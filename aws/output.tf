@@ -2,8 +2,8 @@
 # Global output of this project.
 
 output "secrets" {
-  description = "Doppler on AWS Secrets Manager"
-  value       = module.secrets.doppler
+  description = "Doppler Service"
+  value       = nonsensitive(data.doppler_secrets.ignite.map)
 }
 
 output "repository" {
@@ -30,4 +30,3 @@ output "network" {
   description = "AWS network"
   value       = module.network.server
 }
-

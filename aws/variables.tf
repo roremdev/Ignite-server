@@ -11,6 +11,11 @@ variable "project" {
   default     = "server-ignite"
 }
 
+variable "doppler_token" {
+  description = "A token to authenticate with Doppler"
+  type        = string
+}
+
 variable "settings" {
   description = "Settings for the project"
   default     = {

@@ -7,7 +7,7 @@ const env = dotenv.config()
 
 dotenvExpand.expand(env)
 
-server.get('/', (req, res) => res.send(`Hello World 👋 ${process.env.PROJECT}`))
+server.get('/', (req, res) => res.send(`Hello ${process.env.PROJECT} 👋`))
 
 server.listen(80, () => {
     console.log('⬢ Ignite')

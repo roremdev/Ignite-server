@@ -19,5 +19,9 @@ terraform {
       source  = "hashicorp/aws"
       version = "4.32.0"
     }
+
+    doppler = {
+      source = "DopplerHQ/doppler"
+    }
   }
 }

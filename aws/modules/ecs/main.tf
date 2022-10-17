@@ -1,7 +1,3 @@
-locals {
-  secrets = ["PROJECT"]
-}
-
 resource "aws_ecs_cluster" "server" {
   name = var.project
 }
@@ -28,18 +24,11 @@ resource "aws_ecs_task_definition" "server" {
           hostPort      = 80
         }
       ]
-      #      logConfiguration : {
-      #        "logDriver" : "awslogs",
-      #        "options" : {
-      #          "awslogs-group" : "${var.cloudwatch_group}",
-      #          "awslogs-region" : "eu-central-1",
-      #          "awslogs-stream-prefix" : "ecs"
-      #        }
-      secrets = [
-        {
-          name      = "PROJECT"
-          valueFrom = var.secrets.arn
-        }
+      environment = [
+      for key, secret in var.secrets : {
+        name  = key
+        value = secret
+      }
       ]
     }
   ])
@@ -64,11 +53,3 @@ resource "aws_ecs_service" "development" {
     container_port   = 80
   }
 }
-
-
-#secrets = [
-#for secret in local.secrets : {
-#  name      = secret
-#  ValueFrom = var.secrets.arn
-#}
-#]
