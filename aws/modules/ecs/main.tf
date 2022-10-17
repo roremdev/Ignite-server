@@ -28,12 +28,19 @@ resource "aws_ecs_task_definition" "server" {
           hostPort      = 80
         }
       ]
-#      secrets = [
-#        {
-#          name      = "PROJECT"
-#          valueFrom = var.secrets.arn
-#        }
-#      ]
+      #      logConfiguration : {
+      #        "logDriver" : "awslogs",
+      #        "options" : {
+      #          "awslogs-group" : "${var.cloudwatch_group}",
+      #          "awslogs-region" : "eu-central-1",
+      #          "awslogs-stream-prefix" : "ecs"
+      #        }
+      secrets = [
+        {
+          name      = "PROJECT"
+          valueFrom = var.secrets.arn
+        }
+      ]
     }
   ])
 }

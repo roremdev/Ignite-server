@@ -1,8 +1,13 @@
 import express from 'express'
+import dotenv from 'dotenv'
+import dotenvExpand from 'dotenv-expand'
 
 const server = express()
+const env = dotenv.config()
 
-server.get('/', (req, res) => res.send('Hello World 👋'))
+dotenvExpand.expand(env)
+
+server.get('/', (req, res) => res.send(`Hello World 👋 ${process.env.PROJECT}`))
 
 server.listen(80, () => {
     console.log('⬢ Ignite')
