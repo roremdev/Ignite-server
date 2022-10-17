@@ -35,11 +35,12 @@ resource "aws_ecs_task_definition" "server" {
 }
 
 resource "aws_ecs_service" "development" {
-  name            = "development"
-  cluster         = aws_ecs_cluster.server.id
-  task_definition = aws_ecs_task_definition.server.arn
-  launch_type     = "FARGATE"
-  desired_count   = 3
+  name                 = "development"
+  cluster              = aws_ecs_cluster.server.id
+  task_definition      = aws_ecs_task_definition.server.arn
+  launch_type          = "FARGATE"
+  desired_count        = 3
+  force_new_deployment = true
 
   network_configuration {
     assign_public_ip = true
