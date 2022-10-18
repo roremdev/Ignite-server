@@ -2,7 +2,6 @@ resource "aws_ecs_cluster" "server" {
   name = var.project
 }
 
-
 resource "aws_ecs_task_definition" "server" {
   family                   = var.project
   requires_compatibilities = ["FARGATE"]
