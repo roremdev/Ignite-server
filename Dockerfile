@@ -10,4 +10,4 @@ RUN pnpm install --frozen-lockfile --production
 
 expose 80
 
-CMD [ "doppler", "run", "--", "npm", "start" ]
+CMD [ "npm", "start" ]
