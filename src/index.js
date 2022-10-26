@@ -8,7 +8,13 @@ const env = dotenv.config()
 
 dotenvExpand.expand(env)
 
-console.log(process.env)
+console.log({
+    DOMAIN: process.env.DOMAIN,
+    PORT: process.env.PORT,
+    MODE: process.env.MODE,
+    PROJECT: process.env.PROJECT,
+    SERVER_URL: process.env.SERVER_URL,
+})
 server.use(cors())
 
 server.get('/', (req, res) => res.send(`Hello ${process.env.PROJECT} 🍁`))
