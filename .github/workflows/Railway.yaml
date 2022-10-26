@@ -45,7 +45,12 @@ jobs:
         with:
           name: build
 
-      - name: Install Railway
+      - name: 🚧 Make envfile
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_DOPPLER_TOKEN: ${{ secrets.RAILWAY_SERVICE_TOKEN }}
+
+      - name: 🛠 Setup Railway
         run: npm i -g @railway/cli
 
       - name: 🚀 Deploying to Railway
