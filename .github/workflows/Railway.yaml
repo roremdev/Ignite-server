@@ -45,10 +45,10 @@ jobs:
         with:
           name: build
 
-      - name: 🚧 Make envfile
-        uses: SpicyPizza/create-envfile@v1.3
+      - name: 🚧 Create .env file
+        uses: ozaytsev86/create-env-file@v1
         with:
-          envkey_DOPPLER_TOKEN: ${{ secrets.RAILWAY_SERVICE_TOKEN }}
+          ENV_DOPPLER_TOKEN: ${{ secrets.RAILWAY_SERVICE_TOKEN }}
 
       - name: 🛠 Setup Railway
         run: npm i -g @railway/cli
