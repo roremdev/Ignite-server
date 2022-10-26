@@ -45,10 +45,14 @@ jobs:
         with:
           name: build
 
+      - run: ls -al
+
       - name: 🚧 Create .env file
         uses: ozaytsev86/create-env-file@v1
         with:
           ENV_DOPPLER_TOKEN: ${{ secrets.RAILWAY_SERVICE_TOKEN }}
+
+      - run: ls -al
 
       - name: 🛠 Setup Railway
         run: npm i -g @railway/cli
