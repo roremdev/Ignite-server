@@ -1,6 +1,3 @@
-# ℹ️ Description
-# Output of AWS network.
-
 output "server" {
   description = "AWS network"
   value       = {

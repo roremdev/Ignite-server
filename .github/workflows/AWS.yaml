@@ -1,0 +1,106 @@
+name: AWS Development Deployment
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  build:
+    name: Build Server
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⚙ Configure GitHub Actions
+        uses: actions/checkout@v3
+
+      - name: 🛠 Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: 🛠 Setup PNPM
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7
+
+      - name: 🚧 Install dependencies and Build project
+        run: pnpm install --no-frozen-lockfile && pnpm run build
+
+      - name: 🏷 Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: |
+            dist/
+            Dockerfile
+            pnpm-lock.yaml
+            package.json
+
+
+  publish:
+    name: Build and Push Image
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: 🏷 Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+
+      - name: 🔒 AWS Authentication
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: 🚧 Set up Cloud SDK
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: 🚀 Build and publish to Elastic Container Registry
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ignite
+          IMAGE_TAG: latest
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+#  provision:
+#    runs-on: ubuntu-latest
+#    needs: [ publish ]
+#
+#    defaults:
+#      run:
+#        working-directory: aws
+#
+#    outputs:
+#      init: ${{ steps.terraform_init.outcome }}
+#
+#    steps:
+#      - name: ⚙️ Configure GitHub Actions
+#        uses: actions/checkout@v3
+#
+#      - name: ⚙️ Configure Terraform
+#        uses: hashicorp/setup-terraform@v2
+#        with:
+#          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+#
+#      - name: 🚧 Defining environment context
+#        run: |
+#          mkdir .terraform
+#          cd .terraform
+#          echo server >> environment
+#
+#      - name: ♻️ Terraform replace
+#        id: terraform_init
+#        continue-on-error: true
+#        run: |
+#          terraform init
+#          terraform apply -replace="module.ecs.aws_ecs_service.development" -auto-approve

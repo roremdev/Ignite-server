@@ -1,5 +1,5 @@
 resource "aws_lb" "server" {
-  name               = var.project
+  name               = "ignite"
   load_balancer_type = "application"
   subnets            = [
     aws_default_subnet.subnet_a.id,
@@ -12,7 +12,7 @@ resource "aws_lb" "server" {
 }
 
 resource "aws_alb_target_group" "server" {
-  name        = var.project
+  name        = "ignite"
   port        = 80
   protocol    = "HTTP"
   target_type = "ip"

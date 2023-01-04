@@ -1,27 +1,23 @@
-# ℹ️ Description
-# Defines version constraints for Terraform and the AWS provider.
-
-# ♻️ Workspaces:
-# - server-ignite [backend, ignite]
 terraform {
-  required_version = ">= 1.1.7"
+  required_version = "1.3.6"
 
-  cloud {
-    organization = "threepoints"
-
-    workspaces {
-      tags = ["ignite", "backend"]
-    }
-  }
+#  cloud {
+#    organization = "fronity"
+#
+#    workspaces {
+#      tags = ["ignite", "server"]
+#    }
+#  }
 
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "4.32.0"
+      version = "4.48.0"
     }
 
     doppler = {
-      source = "DopplerHQ/doppler"
+      source  = "DopplerHQ/doppler"
+      version = "1.1.6"
     }
   }
 }

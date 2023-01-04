@@ -1,4 +1,3 @@
-# Load Balancer Security Group
 resource "aws_security_group" "server" {
   name        = "server"
   description = "Allow HTTP inbound traffic"
@@ -17,13 +16,8 @@ resource "aws_security_group" "server" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  tags = {
-    Name = var.project
-  }
 }
 
-## Traffic to the ECS cluster should only come from the Load Balancer
 resource "aws_security_group" "environment" {
   name        = "environment"
   description = "Allows traffic only from load balancer"
@@ -32,18 +26,13 @@ resource "aws_security_group" "environment" {
     from_port       = 0
     to_port         = 0
     protocol        = "-1"
-    # Only allowing traffic in from the load balancer security group
     security_groups = [aws_security_group.server.id]
   }
 
   egress {
-    from_port   = 0 # Allowing any incoming port
-    to_port     = 0 # Allowing any outgoing port
-    protocol    = "-1" # Allowing any outgoing protocol
-    cidr_blocks = ["0.0.0.0/0"] # Allowing traffic out to all IP addresses
-  }
-
-  tags = {
-    Name = var.project
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }

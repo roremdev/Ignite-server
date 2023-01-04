@@ -6,8 +6,7 @@ WORKDIR /server
 
 COPY package.json pnpm-lock.yaml dist ./
 
-RUN pnpm install --frozen-lockfile --production
+RUN pnpm install --frozen-lockfile --prod
 
 expose 80
-
-CMD [ "npm", "start" ]
+CMD [ "pnpm", "start" ]
