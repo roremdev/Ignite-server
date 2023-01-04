@@ -17,7 +17,7 @@ console.log({
 })
 server.use(cors())
 
-server.get('/', (req, res) => res.send(`Hello ${process.env.PROJECT} 🍁`))
+server.get('/', (req, res) => res.send(`Hello ${process.env.PROJECT} 🍁 as Development`))
 
 server.listen(80, () => {
     console.log('⬢ Ignite')
