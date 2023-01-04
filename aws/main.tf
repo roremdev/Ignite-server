@@ -21,20 +21,18 @@ module "repository" {
   source = "./modules/repository"
 }
 
-#module "security" {
-#  source  = "./modules/security"
-#  project = var.project
-#}
+module "security" {
+  source = "./modules/security"
+}
 
 module "network" {
   source = "./modules/network"
 }
 
-#module "ecs" {
-#  source     = "./modules/ecs"
-#  project    = var.project
-#  secrets    = data.doppler_secrets.ignite.map
-#  repository = module.repository.docker
-#  security   = module.security.server
-#  network    = module.network.server
-#}
+module "service" {
+  source     = "./modules/service"
+  secrets    = data.doppler_secrets.server.map
+  repository = module.repository.server
+  security   = module.security.server
+  network    = module.network.server
+}

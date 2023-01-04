@@ -1,12 +1,17 @@
 name: AWS Development Deployment
 
 on:
-  push:
+  pull_request:
     branches:
       - development
+      - staging
+      - production
+    types:
+      - closed
 
 jobs:
   build:
+    if: github.event.pull_request.merged == true
     name: Build Server
     runs-on: ubuntu-latest
 
@@ -22,7 +27,7 @@ jobs:
       - name: 🛠 Setup PNPM
         uses: pnpm/action-setup@v2.2.2
         with:
-          version: 7
+          version: latest
 
       - name: 🚧 Install dependencies and Build project
         run: pnpm install --no-frozen-lockfile && pnpm run build
@@ -39,6 +44,7 @@ jobs:
 
 
   publish:
+    if: github.event.pull_request.merged == true
     name: Build and Push Image
     needs: build
     runs-on: ubuntu-latest
@@ -67,7 +73,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ignite
-          IMAGE_TAG: latest
+          IMAGE_TAG: ${{ github.base_ref }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
@@ -103,4 +109,4 @@ jobs:
 #        continue-on-error: true
 #        run: |
 #          terraform init
-#          terraform apply -replace="module.ecs.aws_ecs_service.development" -auto-approve
+#          terraform apply -replace="module.service.aws_ecs_service.development" -auto-approve

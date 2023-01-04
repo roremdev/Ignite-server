@@ -1,9 +1,14 @@
+locals {
+  project = "ignite"
+  port    = 80
+}
+
 resource "aws_ecs_cluster" "server" {
-  name = var.project
+  name = local.project
 }
 
 resource "aws_ecs_task_definition" "server" {
-  family                   = var.project
+  family                   = local.project
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   cpu                      = 256
@@ -12,22 +17,22 @@ resource "aws_ecs_task_definition" "server" {
 
   container_definitions = jsonencode([
     {
-      name         = var.project
+      name         = local.project
       image        = var.repository.url
       cpu          = 256 # .25 vCPU
       memory       = 512 # .5 GB
       essential    = true
       portMappings = [
         {
-          containerPort = 80
-          hostPort      = 80
+          containerPort = local.port
+          hostPort      = local.port
         }
       ]
       environment = [
-      for key, secret in var.secrets : {
-        name  = key
-        value = secret
-      }
+        for key, secret in var.secrets : {
+          name  = key
+          value = secret
+        }
       ]
     }
   ])
@@ -50,6 +55,6 @@ resource "aws_ecs_service" "development" {
   load_balancer {
     target_group_arn = var.network.target_group
     container_name   = aws_ecs_task_definition.server.family
-    container_port   = 80
+    container_port   = local.port
   }
 }
