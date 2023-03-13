@@ -1,14 +1,14 @@
 # IDE
-.idea
+.idea/
 
-# nodejs
-dist
-node_modules
+# Server
+dist/
+node_modules/
 
 # Docker
-docker
+docker/
 
-# terraform
+# Terraform
 **/.terraform
 *.tfstate
 *.tfstate.*

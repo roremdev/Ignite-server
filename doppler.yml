@@ -1,3 +1,3 @@
 setup:
-    project: ignite
-    config: dev
+    project: ignite-backend
+    config: srv_local

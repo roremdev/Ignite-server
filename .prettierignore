@@ -1,0 +1,5 @@
+# GitHub
+.github/
+
+# PNPM
+pnpm-lock.yaml

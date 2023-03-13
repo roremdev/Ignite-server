@@ -1,12 +1,15 @@
 FROM node:16
 
-RUN curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm
+RUN npm install -g pnpm
 
 WORKDIR /server
 
-COPY package.json pnpm-lock.yaml dist ./
+COPY .npmrc package.json pnpm-lock.yaml ./
+COPY dist ./
+#COPY prisma ./prisma
 
 RUN pnpm install --frozen-lockfile --prod
+#RUN pnpm exec prisma generate
 
-expose 80
+EXPOSE 80
 CMD [ "pnpm", "start" ]

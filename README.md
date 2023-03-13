@@ -1,5 +1,8 @@
-<img src="./project/assets/ignite.svg" alt="logo" width="80">
+<img src="./project/assets/logo.svg" alt="logo" width="80" />
 
-# LaRifamos
+# Ignite
 
-> Web Platform v2.0.0
+> Server to develop Infrastructure as Code
+
+![NodeJS](https://img.shields.io/badge/v16.X-DBEBC6?style=for-the-badge&logo=Node.js)
+![TypeScript](https://img.shields.io/badge/v4.X-A7C9E6?style=for-the-badge&logo=Typescript)
